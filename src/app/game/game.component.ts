@@ -1,11 +1,26 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { GameRowsCols } from '../static-settings/rows-and-cols';
-import { DiscColors } from '../static-settings/discs-colors';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss'],
+  animations: [
+    trigger('discInsertedAnimation', [
+      transition(':enter', [
+        style({
+          opacity: 0,
+          marginBottom: '1300px',
+          position: 'absolute',
+        }),
+        animate(
+          '0.5s cubic-bezier(0.33333, 0, 0.66667, 0.33333)',
+          style({ marginBottom: '0px', opacity: 1 })
+        ),
+      ]),
+    ]),
+  ],
 })
 export class GameComponent implements OnInit {
   @Input() restartGame: any;
@@ -51,6 +66,7 @@ export class GameComponent implements OnInit {
     if (this.board[parseInt(col)][parseInt(row)] == 1) return true;
     else return false;
   }
+
   opponentFilledCell(row: string, col: string) {
     if (this.board[parseInt(col)][parseInt(row)] == 2) return true;
     else return false;
