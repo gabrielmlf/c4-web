@@ -1,0 +1,32 @@
+.game {
+  display: grid;
+  background-color: #524e4e;
+  height: 700px;
+  width: 800px;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  grid-column-gap: 10px;
+  grid-row-gap: 1px;
+}
+
+.game-cell {
+  display: flex;
+  background-color: white;
+  align-items: center;
+}
+
+.filledCellUser {
+  margin: auto;
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  background-color: #ff2b73;
+}
+
+.filledCellOpponent {
+  margin: auto;
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  background-color: #ffcd37;
+}

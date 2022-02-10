@@ -1,0 +1,11 @@
+<div *ngIf="finishedLoading">
+  <button class="btn btn-danger" (click)="onReset()">RESET</button>
+  <div class="game text-center">
+    <ng-container class="game-row" *ngFor="let row of rowsCols.rows">
+      <div [id]="row + ' ' + col" (click)="rowClicked($event)" class="game-cell" *ngFor="let col of rowsCols.cols">
+        <div *ngIf="userFilledCell(row,col)" class="filledCellUser"></div>
+        <div *ngIf="opponentFilledCell(row,col)" class="filledCellOpponent"></div>
+      </div>
+    </ng-container>
+  </div>
+</div>
