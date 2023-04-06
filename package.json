@@ -1,6 +1,6 @@
 {
   "name": "c4-web",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -18,8 +18,9 @@
     "@angular/platform-browser": "~13.0.0",
     "@angular/platform-browser-dynamic": "~13.0.0",
     "@angular/router": "~13.0.0",
+    "@ng-bootstrap/ng-bootstrap": "^12.1.2",
+    "@popperjs/core": "^2.11.7",
     "rxjs": "~7.4.0",
-    "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
@@ -34,6 +35,7 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
+    "tslib": "^2.5.0",
     "typescript": "~4.4.3"
   }
 }

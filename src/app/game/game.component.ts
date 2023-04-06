@@ -1,6 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit,OnChanges } from '@angular/core';
 import { GameRowsCols } from '../static-settings/rows-and-cols';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { Output } from '@angular/core';
+import { EventEmitter } from '@angular/core';
+import { SimpleChanges } from '@angular/core';
+import { GameService } from '../game.service';
 
 @Component({
   selector: 'app-game',
@@ -23,18 +27,23 @@ import { animate, style, transition, trigger } from '@angular/animations';
   ],
 })
 export class GameComponent implements OnInit {
-  @Input() restartGame: any;
+  @Output() gameWon = new EventEmitter<number>();
   rowsCols = GameRowsCols;
   board!: any[][];
   finishedLoading: boolean = false;
   userTurn = true;
 
-  constructor() {}
+  constructor(
+    private gameService: GameService
+  ) { }
 
   ngOnInit(): void {
     this.createGameArray(this.rowsCols.cols.length)
       .then((game: any) => (this.board = game))
       .finally(() => (this.finishedLoading = true));
+    this.gameService.restart.subscribe((r)=>{
+      this.onReset()
+    })
   }
 
   createGameArray(cols: number) {
@@ -54,12 +63,13 @@ export class GameComponent implements OnInit {
     this.insertDisc(col);
   }
 
-  insertDisc(col: string) {
+  insertDisc(col: string,) {
     const freeRow = this.board[parseInt(col)].lastIndexOf(0);
     if (freeRow !== -1) {
       this.board[parseInt(col)][freeRow] = this.userTurn ? 1 : 2;
       this.userTurn = !this.userTurn;
-    } else console.log('%cno free space!', 'color:red');
+      if (this.hasWinningMove(parseInt(col), freeRow)) this.gameFinished();
+    } else console.log('%cno free space on col!', 'color:red');
   }
 
   userFilledCell(row: string, col: string) {
@@ -77,4 +87,86 @@ export class GameComponent implements OnInit {
       (game: any) => (this.board = game)
     );
   }
+
+  gameFinished() {
+    const player = this.userTurn ? 2 : 1;
+    this.gameService.gameWon(player);
+  }
+
+  //🤖This part of the code was made using Chat-GPT🤖
+  hasWinningMove(col: number, row: number) {
+    const board = this.board;
+    const player = board[col][row];
+    // Check horizontal
+    let count = 0;
+    for (let i = 0; i < board.length; i++) {
+      if (board[i][row] === player) {
+        count++;
+        if (count === 4) {
+          return true;
+        }
+      } else {
+        count = 0;
+      }
+    }
+
+    // Check vertical
+    count = 0;
+    for (let j = 0; j < board[row].length; j++) {
+      if (board[col][j] === player) {
+        count++;
+        if (count === 4) {
+          return true;
+        }
+      } else {
+        count = 0;
+      }
+    }
+
+    // Check diagonal (top-left to bottom-right)
+    count = 0;
+    let i = col;
+    let j = row;
+    while (i > 0 && j > 0) {
+      i--;
+      j--;
+    }
+    while (i < board.length && j < board[row].length) {
+      if (board[i][j] === player) {
+        count++;
+        if (count === 4) {
+          return true;
+        }
+      } else {
+        count = 0;
+      }
+      i++;
+      j++;
+    }
+
+    // Check diagonal (bottom-left to top-right)
+    count = 0;
+    i = col;
+    j = row;
+    while (i > 0 && j < board[row].length - 1) {
+      i--;
+      j++;
+    }
+    while (i < board.length && j >= 0) {
+      if (board[i][j] === player) {
+        count++;
+        if (count === 4) {
+          return true;
+        }
+      } else {
+        count = 0;
+      }
+      i++;
+      j--;
+    }
+
+    // No winning move found
+    return false;
+  }
+
 }
