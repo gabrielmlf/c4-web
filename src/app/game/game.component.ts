@@ -1,9 +1,8 @@
-import { Component, Input, OnInit,OnChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { GameRowsCols } from '../static-settings/rows-and-cols';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
-import { SimpleChanges } from '@angular/core';
 import { GameService } from '../game.service';
 
 @Component({
@@ -41,7 +40,7 @@ export class GameComponent implements OnInit {
     this.createGameArray(this.rowsCols.cols.length)
       .then((game: any) => (this.board = game))
       .finally(() => (this.finishedLoading = true));
-    this.gameService.restart.subscribe((r)=>{
+    this.gameService.restart.subscribe((r) => {
       this.onReset()
     })
   }
