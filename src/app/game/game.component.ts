@@ -16,6 +16,8 @@ import { GameService } from '../game.service';
           opacity: 0,
           marginBottom: '1300px',
           position: 'absolute',
+          height: "10vh",
+          width:"10vh",
         }),
         animate(
           '0.5s cubic-bezier(0.33333, 0, 0.66667, 0.33333)',
