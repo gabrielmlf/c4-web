@@ -9,7 +9,7 @@ import { GameService } from '../game.service';
   styleUrls: ['./result-screen.component.scss']
 })
 export class ResultScreenComponent implements OnInit {
-  @Input() player: any
+  winner:number = 0;
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -20,6 +20,7 @@ export class ResultScreenComponent implements OnInit {
     this.gameService.restart.subscribe((r) => {
       if (r == true) { this.activeModal.close() }
     })
+    this.winner = this.gameService.getCurrentPlayer()
   }
 
   restart() {

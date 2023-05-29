@@ -1,9 +1,13 @@
-<div class="modal-header">
-    <h4 class="modal-title">VICTORY!</h4>
-</div>
-<div class="modal-body">
-    <p>Player {{player}} won the game!</p>
-</div>
-<div class="modal-footer">
-    <button type="button" class="btn btn-warning text-center" (click)="restart()">Restart game</button>
-</div>
+<div class="modal-content">
+    <div class="modal-header">
+        <h4 class="modal-title">VICTORY!</h4>
+    </div>
+    <div class="modal-body">
+        <span>Player</span>
+        <div *ngIf="winner==2" class="playerOneIndicator"></div>
+        <div *ngIf="winner==1" class="playerTwoIndicator"></div>
+        <span>won the game!</span>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-warning text-center" (click)="restart()">Restart game</button>
+    </div>

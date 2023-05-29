@@ -22,12 +22,11 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
    this.gameService.result.subscribe((player)=>{
     console.log(`%cPlayer ${player} Wins`, 'color:green');
-    this.victoryModal(player)
+    this.victoryModal()
    })
   }
 
-  victoryModal(player: any) {
-    const modalRef = this.modalService.open(ResultScreenComponent);
-    modalRef.componentInstance.player = player;
+  victoryModal() {
+    this.modalService.open(ResultScreenComponent);
   }
 }
