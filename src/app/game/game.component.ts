@@ -25,12 +25,13 @@ import { GameService } from '../game.service';
     ]),
   ],
 })
+
 export class GameComponent implements OnInit {
   @Output() gameWon = new EventEmitter<number>();
   rowsCols = GameRowsCols;
   board!: any[][];
   finishedLoading: boolean = false;
-  userTurn = true;
+  isPlayerTurn: boolean = true;
 
   constructor(
     private gameService: GameService
@@ -65,10 +66,14 @@ export class GameComponent implements OnInit {
   insertDisc(col: string,) {
     const freeRow = this.board[parseInt(col)].lastIndexOf(0);
     if (freeRow !== -1) {
-      this.board[parseInt(col)][freeRow] = this.userTurn ? 1 : 2;
-      this.userTurn = !this.userTurn;
-      if (this.hasWinningMove(parseInt(col), freeRow)) this.gameFinished();
-    } else console.log('%cno free space on col!', 'color:red');
+      this.board[parseInt(col)][freeRow] = this.gameService.getCurrentPlayer();
+      if (this.hasWinningMove(parseInt(col), freeRow)) {
+        this.gameFinished();
+      }
+      this.gameService.turnFinished()
+    } else {
+      console.log('%cno free space on col!', 'color:red'); //Add UI enhancements later 
+    }
   }
 
   userFilledCell(row: string, col: string) {
@@ -88,7 +93,7 @@ export class GameComponent implements OnInit {
   }
 
   gameFinished() {
-    const player = this.userTurn ? 2 : 1;
+    const player = this.isPlayerTurn ? 2 : 1;
     this.gameService.gameWon(player);
   }
 
