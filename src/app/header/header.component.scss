@@ -1,3 +1,23 @@
 .header{
     min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 17rem;
+}
+
+.playerOneIndicator {
+    margin: auto;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    background-color: #ff2b73;
+}
+
+.playerTwoIndicator {
+    margin: auto;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    background-color: #ffcd37;
 }

@@ -1,3 +1,9 @@
 <div class="header">
+  <div>
+    <span>Current Turn:</span>
+    <div *ngIf="isPlayer1Turn" class="playerOneIndicator"></div>
+    <div *ngIf="!isPlayer1Turn" class="playerTwoIndicator"></div>
+  </div>
+
     <button class="btn btn-warning" (click)="restart()">RESTART GAME</button>
   </div>

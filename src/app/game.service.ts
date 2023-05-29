@@ -7,14 +7,14 @@ import { Subject } from 'rxjs';
 export class GameService {
   private result$ = new Subject<any>();
   private restart$ = new Subject<any>();
-  private playerTurn$ = new Subject<boolean>();
+  private newTurn$ = new Subject<boolean>();
   private isPlayerOneTurn:boolean = true;
   restart = this.restart$.asObservable();
   result = this.result$.asObservable();
-  playerTurn = this.playerTurn$.asObservable();
+  newTurn = this.newTurn$.asObservable();
 
   constructor() { 
-    this.playerTurn$.next(true)
+    this.newTurn$.next(true)
   }
 
   getCurrentPlayer():number {
@@ -23,7 +23,7 @@ export class GameService {
 
   turnFinished() {
     this.isPlayerOneTurn = !this.isPlayerOneTurn;
-    this.playerTurn$.next(this.isPlayerOneTurn)
+    this.newTurn$.next(this.isPlayerOneTurn)
   }
 
   gameWon(player: any) {
@@ -31,6 +31,8 @@ export class GameService {
   }
 
   gameRestarted(){
+    this.isPlayerOneTurn = true
+    this.newTurn$.next(true)
     this.restart$.next(true);
   }
 }

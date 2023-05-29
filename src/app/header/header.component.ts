@@ -7,10 +7,14 @@ import { GameService } from '../game.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  isPlayer1Turn:boolean = true
 
   constructor(private gameService: GameService) { }
 
   ngOnInit(): void {
+    this.gameService.newTurn.subscribe(()=>{
+      this.isPlayer1Turn = this.gameService.getCurrentPlayer() == 1 ? true : false;
+    })
   }
 
   restart() {
