@@ -65,17 +65,14 @@ export class GameComponent implements OnInit {
     this.insertDisc(col);
   }
 
-  insertDisc(col: string,) {
+  insertDisc(col: string) {
     const freeRow = this.board[parseInt(col)].lastIndexOf(0);
-    if (freeRow !== -1) {
-      this.board[parseInt(col)][freeRow] = this.gameService.getCurrentPlayer();
-      if (this.hasWinningMove(parseInt(col), freeRow)) {
-        this.gameFinished();
-      }
-      this.gameService.turnFinished()
-    } else {
-      console.log('%cno free space on col!', 'color:red'); //Add UI enhancements later 
+    if (freeRow < 0) return
+    this.board[parseInt(col)][freeRow] = this.gameService.getCurrentPlayer();
+    if (this.hasWinningMove(parseInt(col), freeRow)) {
+      this.gameFinished();
     }
+    this.gameService.turnFinished();
   }
 
   userFilledCell(row: string, col: string) {

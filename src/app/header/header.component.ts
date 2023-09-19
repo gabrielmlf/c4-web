@@ -13,7 +13,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.gameService.newTurn.subscribe(()=>{
-      this.isPlayer1Turn = this.gameService.getCurrentPlayer() == 1 ? true : false;
+      this.isPlayer1Turn = this.gameService.getCurrentPlayer() == 1;
     })
   }
 
